@@ -26,7 +26,7 @@
     <link href="assets/css/semi-dark.css" rel="stylesheet" />
     <link href="assets/css/header-colors.css" rel="stylesheet" />
 
-    <title>Fobia - Bootstrap5 Admin Template</title>
+    <title>AIKHUSY ASS</title>
   </head>
   <body>
     
@@ -76,7 +76,9 @@
               </div>
               <!--end breadcrumb-->
 
-              @yield('content')
+              <div class="card">
+                biji
+              </div>
               
 
 

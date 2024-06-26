@@ -21,7 +21,7 @@ class PostsController extends Controller
     public function index()
     {
         //
-        
+        return view('layouts.pages.indexTable');
     }
 
     /**
@@ -31,8 +31,8 @@ class PostsController extends Controller
     {
         //
         $forms=$this->posts->getForms();
-
-        return view('posts.index')->with('inputs',$forms);
+        $title="Create Post";
+        return view('layouts.pages.formCreate',compact('forms','title'));
     }
 
     /**
