@@ -7,21 +7,30 @@ use Illuminate\Http\Request;
 
 class PostsController extends Controller
 {
+    protected $route = [];
     /**
      * Display a listing of the resource.
      */
 
-     protected $posts;
+    protected $posts;
 
     // Konstruktor dengan Dependency Injection
     public function __construct(Post $posts)
     {
         $this->posts = $posts;
+        $this->route['create'] = 'posts.create';
+        $this->route['edit'] = 'posts.edit';
+        $this->route['update'] = 'posts.update';
+        $this->route['store'] = 'posts.store';
+        $this->route['delete'] = 'posts.destroy';
     }
     public function index()
     {
         //
-        return view('layouts.pages.indexTable');
+        $column = $this->posts->getForms();
+        $route = $this->route;
+        $items = Post::all();
+        return view('layouts.pages.indexTable', compact('route', 'column', 'items'));
     }
 
     /**
@@ -30,9 +39,12 @@ class PostsController extends Controller
     public function create()
     {
         //
-        $forms=$this->posts->getForms();
-        $title="Create Post";
-        return view('layouts.pages.formCreate',compact('forms','title'));
+        $forms = $this->posts->getForms();
+        $title = "Create Post";
+
+        $route = $this->route;
+
+        return view('layouts.pages.formCreate', compact('forms', 'title', 'route'));
     }
 
     /**
@@ -41,12 +53,15 @@ class PostsController extends Controller
     public function store(Request $request)
     {
         //
+        $post = $request->all();
+        Post::create($post);
+        return redirect()->route('posts.index');
     }
 
     /**
      * Display the specified resource.
      */
-    public function show(Posts $posts)
+    public function show(Post $posts)
     {
         //
     }
@@ -54,24 +69,45 @@ class PostsController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Posts $posts)
+    public function edit(Post $post)
     {
-        //
+        $forms = $this->posts->getForms();
+        $title = "Edit Post";  // Ganti judul jika diperlukan
+        $route = $this->route;
+        $items = $post;
+        return view('layouts.pages.formEdit', compact('forms', 'title', 'route', 'items'));
     }
+
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Posts $posts)
-    {
-        //
-    }
+    /**
+ * Update the specified resource in storage.
+ */
+public function update(Request $request, Post $post)
+{
+    // Validasi data input dari form jika diperlukan
+    // Ambil data dari form input
+    $postData = $request->all();
+    
+    // Update data post yang sesuai dengan $post
+    $post->update($postData);
+
+    // Redirect ke halaman index post setelah update berhasil
+    return redirect()->route('posts.index');
+}
+
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Posts $posts)
+    public function destroy(Post $post)
     {
-        //
+        // Hapus satu post berdasarkan instance Post yang diterima dari route
+        $post->delete();
+
+        // Redirect ke halaman index post setelah penghapusan
+        return redirect()->route('posts.index');
     }
 }

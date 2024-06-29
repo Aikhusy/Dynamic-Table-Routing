@@ -89,7 +89,7 @@
                         <div class="border p-3 rounded">
                             <h6 class="mb-0 text-uppercase">{{$title}}</h6>
                             <hr>
-                            <form class="row g-3" action="@yield('dynamicRoute')" method="POST">
+                            <form class="row g-3" action="{{ route($route['store']) }}" method="POST">
                                 @csrf
 
                                 @foreach ($forms as $inputDetail)

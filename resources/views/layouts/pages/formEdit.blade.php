@@ -7,33 +7,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
     <!-- loader-->
-    <link href="assets/css/pace.min.css" rel="stylesheet" />
-    <script src="assets/js/pace.min.js"></script>
+    <link href="{{ asset('assets/css/pace.min.css') }}" rel="stylesheet" />
+    <script src="{{ asset('assets/js/pace.min.js') }}"></script>
 
     <!--plugins-->
-    <link href="assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css" rel="stylesheet" />
-    <link href="assets/plugins/simplebar/css/simplebar.css" rel="stylesheet" />
-    <link href="assets/plugins/metismenu/css/metisMenu.min.css" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/perfect-scrollbar/css/perfect-scrollbar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/simplebar/css/simplebar.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/plugins/metismenu/css/metisMenu.min.css') }}" rel="stylesheet" />
 
     <!-- CSS Files -->
-    <link href="assets/css/bootstrap.min.css" rel="stylesheet">
-    <link href="assets/css/bootstrap-extended.css" rel="stylesheet">
-    <link href="assets/css/style.css" rel="stylesheet">
-    <link href="assets/css/icons.css" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/bootstrap-extended.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('assets/css/icons.css') }}" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap" rel="stylesheet">
 
     <!--Theme Styles-->
-    <link href="assets/css/dark-theme.css" rel="stylesheet" />
-    <link href="assets/css/semi-dark.css" rel="stylesheet" />
-    <link href="assets/css/header-colors.css" rel="stylesheet" />
+    <link href="{{ asset('assets/css/dark-theme.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/semi-dark.css') }}" rel="stylesheet" />
+    <link href="{{ asset('assets/css/header-colors.css') }}" rel="stylesheet" />
 
-    <title>Fobia - Bootstrap5 Admin Template</title>
+    <title>AIKHUSY ASS</title>
 </head>
 
 <body>
 
-
-    <!--start wrapper-->
+    <!-- Your content here -->
     <div class="wrapper">
         <!--start sidebar -->
         @include('layouts.sidebar')
@@ -82,44 +81,47 @@
                     </div>
                 </div>
                 <!--end breadcrumb-->
+
                 @isset($forms)
 
-                <div class="card">
-                    <div class="card-body">
-                        <div class="border p-3 rounded">
-                            <h6 class="mb-0 text-uppercase">@yield('formTitle')</h6>
-                            <hr>
-                            <form class="row g-3" action="@yield('dynamicRoute')" method="POST">
-                                @csrf
+                    <div class="card">
+                        <div class="card-body">
+                            <div class="border p-3 rounded">
+                                <h6 class="mb-0 text-uppercase">{{ $title }}</h6>
+                                <hr>
+                                <form class="row g-3" action="{{ route($route['update'],$items->id) }}" method="POST">
+                                    @csrf
+                                    @method('PATCH')
+                                    @foreach ($forms as $inputDetail)
+                                        @if ($inputDetail['type'] == 'text')
+                                            <div class="col-12">
+                                                <label class="form-label">{{ $inputDetail['name'] }}</label>
+                                                <input type="text" class="form-control"
+                                                    name="{{ $inputDetail['name'] }}"
+                                                    value="{{ old($inputDetail['name'], $items[$inputDetail['name']] ?? '') }}">
+                                            </div>
+                                        @endif
+                                        @if ($inputDetail['type'] == 'number')
+                                            <div class="col-12">
+                                                <label class="form-label">{{ $inputDetail['name'] }}</label>
+                                                <input type="number" min="0" class="form-control"
+                                                    name="{{ $inputDetail['name'] }}"
+                                                    value="{{ old($inputDetail['name'], $items[$inputDetail['name']] ?? '') }}">
+                                            </div>
+                                        @endif
+                                    @endforeach
 
-                                @foreach ($forms as $i)
-                                    @if ($i[type] == 'text')
-                                        <div class="col-12">
-                                            <label class="form-label">{{ $name }}</label>
-                                                <input type="text" class="form-control" name="{{ $name }}">
+                                    <div class="col-12">
+                                        <div class="d-grid">
+                                            <button type="submit" class="btn btn-primary">Gacor</button>
                                         </div>
-                                    @endif
-                                    @if ($i[type] == 'number')
-                                        <div class="col-12">
-                                            <label class="form-label">Last Name</label>
-                                            <input type="number" min="0" class="form-control"
-                                                name="{{ $name }}">
-                                        </div>
-                                    @endif
-                                @endforeach
-
-                                <div class="col-12">
-                                    <div class="d-grid">
-                                        <button type="submit" class="btn btn-primary">Place Order</button>
                                     </div>
-                                </div>
-                            </form>
+                                </form>
+                            </div>
                         </div>
                     </div>
-                </div>
 
                 @endisset
-                
 
 
 
@@ -205,24 +207,17 @@
         <!--end overlay-->
 
     </div>
-    <!--end wrapper-->
-
-
-
-
-
     <!-- JS Files-->
-    <script src="assets/js/jquery.min.js"></script>
-    <script src="assets/plugins/simplebar/js/simplebar.min.js"></script>
-    <script src="assets/plugins/metismenu/js/metisMenu.min.js"></script>
-    <script src="assets/js/bootstrap.bundle.min.js"></script>
+    <script src="{{ asset('assets/js/jquery.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/simplebar/js/simplebar.min.js') }}"></script>
+    <script src="{{ asset('assets/plugins/metismenu/js/metisMenu.min.js') }}"></script>
+    <script src="{{ asset('assets/js/bootstrap.bundle.min.js') }}"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
     <!--plugins-->
-    <script src="assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js"></script>
+    <script src="{{ asset('assets/plugins/perfect-scrollbar/js/perfect-scrollbar.js') }}"></script>
 
     <!-- Main JS-->
-    <script src="assets/js/main.js"></script>
-
+    <script src="{{ asset('assets/js/main.js') }}"></script>
 
 </body>
 
